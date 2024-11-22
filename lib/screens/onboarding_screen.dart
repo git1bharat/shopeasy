@@ -31,7 +31,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       showDoneButton: true,
       isProgressTap: false,
       isProgress: false,
-      controlsPosition: const Position(left: 35, right: 0, bottom: 0),
+      controlsPosition:  Position(left: 35.w, right: 0, bottom: 0),
       controlsMargin: const EdgeInsets.all(10.0),
       skip: Text(
         'Skip>>',

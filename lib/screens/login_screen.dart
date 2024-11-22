@@ -8,6 +8,7 @@ import 'package:luxe_loft/bloc/auth/auth_event.dart';
 import 'package:luxe_loft/bloc/auth/auth_state.dart';
 import 'package:luxe_loft/utill/luxe_color.dart';
 import 'package:luxe_loft/utill/luxe_typography.dart';
+import 'package:luxe_loft/widgets/social_icon_button.dart';
 import 'package:luxe_loft/widgets/submit_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -88,14 +89,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       _buildLoginForm(),
                       SizedBox(
-                        height: 30.h,
+                        height: 20.h,
                       ),
                       SubmitButton(
                         buttonName: 'Login',
                         onTap: _login,
                       ),
                       SizedBox(
-                        height: 40.h,
+                        height: 30.h,
                       ),
                       const Text(
                         'or continue with ',
@@ -104,19 +105,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 40.h,
                       ),
-                      // Optionally, you can keep social sign-in buttons
-                      // or remove them if not needed.
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SocialIconButton(
+                              image: 'assets/images/google.webp',
+                              buttonName: 'Google'),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          SocialIconButton(
+                              image: 'assets/images/facebook.png',
+                              buttonName: 'Google'),
+                        ],
+                      ),
                       SizedBox(
-                        height: 140.h,
+                        height: 40.h,
                       ),
                       RichText(
                         text: TextSpan(
                           children: <TextSpan>[
-                            const TextSpan(
+                            TextSpan(
                               text: "Don't have an account? ",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                               ),
                             ),
                             TextSpan(
@@ -195,21 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           ),
           SizedBox(
-            height: 10.h,
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/resetPasswordScreen');
-              },
-              child: const Text(
-                'Forgot Password?',
-                style: TextStyle(
-                  color: LuxeColors.brandPrimary,
-                ),
-              ),
-            ),
+            height: 15.h,
           ),
         ],
       ),

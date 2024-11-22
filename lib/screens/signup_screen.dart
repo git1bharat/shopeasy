@@ -1,4 +1,3 @@
-// lib/screens/sign_up_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -7,7 +6,6 @@ import 'package:luxe_loft/bloc/auth/auth_bloc.dart';
 import 'package:luxe_loft/bloc/auth/auth_event.dart';
 import 'package:luxe_loft/bloc/auth/auth_state.dart';
 import 'package:luxe_loft/utill/luxe_typography.dart';
-import 'package:luxe_loft/utill/luxe_color.dart';
 import 'package:luxe_loft/widgets/submit_button.dart';
 import 'package:luxe_loft/widgets/social_icon_button.dart';
 
@@ -74,7 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             },
             builder: (context, state) {
               if (state is AuthLoading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
 
               return Column(
@@ -123,10 +121,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SocialIconButton(
                           image: 'assets/images/facebook.png',
                           buttonName: 'Facebook'),
-                      // SizedBox(width: 10.w),
-                      // const SocialIconButton(
-                      //     image: 'assets/images/apple.png',
-                      //     buttonName: 'Apple'),
+                      SizedBox(width: 10.w),
+                      const SocialIconButton(
+                          image: 'assets/images/apple.png',
+                          buttonName: 'Apple'),
                     ],
                   ),
                 ],
@@ -266,8 +264,8 @@ class PhoneNumberInput extends StatefulWidget {
 }
 
 class _PhoneNumberInputState extends State<PhoneNumberInput> {
-  String initialCountry = 'NG';
-  PhoneNumber _phoneNumber = PhoneNumber(isoCode: 'NG');
+  String initialCountry = 'IN';
+  PhoneNumber _phoneNumber = PhoneNumber(isoCode: 'IN');
 
   @override
   Widget build(BuildContext context) {

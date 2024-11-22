@@ -1,11 +1,9 @@
-// lib/screens/reset_password_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:luxe_loft/bloc/auth/auth_bloc.dart';
 import 'package:luxe_loft/bloc/auth/auth_event.dart';
 import 'package:luxe_loft/bloc/auth/auth_state.dart';
-import 'package:luxe_loft/utill/luxe_color.dart';
 import 'package:luxe_loft/utill/luxe_typography.dart';
 import 'package:luxe_loft/widgets/submit_button.dart';
 
@@ -37,7 +35,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // Optionally, add an AppBar
         appBar: AppBar(
           title: const Text('Reset Password'),
         ),
