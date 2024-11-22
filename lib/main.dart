@@ -58,6 +58,7 @@
 // lib/main.dart
 // lib/main.dart
 // lib/main.dart
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +67,11 @@ import 'package:luxe_loft/bloc/auth/auth_bloc.dart';
 import 'package:luxe_loft/bloc/auth/auth_event.dart';
 import 'package:luxe_loft/bloc/auth/auth_repository.dart';
 import 'package:luxe_loft/bloc/auth/auth_state.dart';
+import 'package:luxe_loft/bloc/product/bloc/product_bloc.dart';
+import 'package:luxe_loft/bloc/product/bloc/product_event.dart';
+import 'package:luxe_loft/screens/onboarding_screen.dart';
 import 'package:luxe_loft/screens/signup_screen.dart';
+import 'package:onboarding/onboarding.dart';
 
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
@@ -87,9 +92,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: authRepository,
-      child: BlocProvider(
-        create: (_) =>
-            AuthBloc(authRepository: authRepository)..add(AppStarted()),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) =>
+                AuthBloc(authRepository: authRepository)..add(AppStarted()),
+          ),
+          BlocProvider(
+            create: (_) => ProductBloc()
+              ..add(LoadProductsEvent()), // Provide ProductBloc here
+          ),
+        ],
         child: ScreenUtilInit(
           designSize: const Size(375, 812), // Adjust based on your design
           builder: (context, child) => MaterialApp(
@@ -103,7 +116,8 @@ class MyApp extends StatelessWidget {
               '/loginScreen': (context) => const LoginScreen(),
               '/signUpScreen': (context) => const SignUpScreen(),
               '/resetPasswordScreen': (context) => const ResetPasswordScreen(),
-              '/homeScreen': (context) => HomeScreen(),
+              '/homeScreen': (context) =>
+                  HomeScreen(), // HomeScreen can now access ProductBloc
               // Add other routes as needed
             },
           ),
@@ -123,13 +137,63 @@ class AppNavigator extends StatelessWidget {
         if (state is Authenticated) {
           return HomeScreen();
         } else if (state is AuthLoading) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         } else {
-          return const LoginScreen();
+          return AnimatedSplashScreen(
+            duration: 300,
+            splash: Image.asset('assets/images/logo.png'),
+            splashTransition: SplashTransition.fadeTransition,
+            nextScreen: const OnBoardingScreen(),
+          );
         }
       },
     );
   }
 }
+
+
+
+
+
+
+// RepositoryProvider.value(
+//       value: authRepository,
+//       child: MultiBlocProvider(
+//         providers: [
+//           BlocProvider(
+//             create: (_) =>
+//                 AuthBloc(authRepository: authRepository)..add(AppStarted()),
+//           ),
+//           BlocProvider(
+//             create: (_) => ProductBloc()
+//               ..add(LoadProductsEvent()), // Provide ProductBloc here
+//           ),
+//         ],
+//         child: ScreenUtilInit(
+//           designSize: const Size(375, 812), // Adjust based on your design
+//           builder: (context, child) => MaterialApp(
+//             home: AnimatedSplashScreen(
+//               duration: 300,
+//               splash: Image.asset('assets/images/logo.png'),
+//               splashTransition: SplashTransition.fadeTransition,
+//               nextScreen: const OnBoardingScreen(),
+//             ),
+//             theme: ThemeData(
+//               primarySwatch: Colors.blue,
+//             ),
+//             initialRoute: '/',
+//             routes: {
+//               '/': (context) => const SplashScreen(),
+//               '/loginScreen': (context) => const LoginScreen(),
+//               '/signUpScreen': (context) => const SignUpScreen(),
+//               '/resetPasswordScreen': (context) => const ResetPasswordScreen(),
+//               '/homeScreen': (context) =>
+//                   HomeScreen(), // HomeScreen can now access ProductBloc
+//               // Add other routes as needed
+//             },
+//           ),
+//         ),
+//       ),
+//     );

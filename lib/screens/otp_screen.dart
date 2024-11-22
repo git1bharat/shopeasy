@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:luxe_loft/bloc/auth/auth_bloc.dart';
-import 'package:luxe_loft/bloc/auth/auth_event.dart';
 import 'package:luxe_loft/bloc/auth/auth_state.dart';
 import 'package:luxe_loft/utill/luxe_typography.dart';
 import 'package:luxe_loft/widgets/submit_button.dart';
@@ -36,13 +35,11 @@ class _OtpScreenState extends State<OtpScreen> {
     super.dispose();
   }
 
+  // Validate the form to ensure OTP input is not empty or invalid
   void _verifyOtp() {
     if (_formKey.currentState!.validate()) {
       final otp = _otpController.text.trim();
       if (_verificationId != null) {
-        // context
-        //     .read<AuthBloc>()
-        //     .add(OtpSubmitted(otp: otp, verificationId: _verificationId!));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Verification ID is missing')),
@@ -57,7 +54,7 @@ class _OtpScreenState extends State<OtpScreen> {
       appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: Padding(
-            padding: const EdgeInsets.only(top: 15.0, left: 8.0),
+            padding: EdgeInsets.only(top: 15.h, left: 8.w),
             child: GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
@@ -93,7 +90,7 @@ class _OtpScreenState extends State<OtpScreen> {
           },
           builder: (context, state) {
             if (state is AuthLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             return Column(
@@ -125,12 +122,12 @@ class _OtpScreenState extends State<OtpScreen> {
                       width: 56,
                       height: 56,
                       textStyle: TextStyle(
-                          fontSize: 20,
+                          fontSize: 20.sp,
                           color: Colors.black,
                           fontWeight: FontWeight.w600),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.blue),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                       ),
                     ),
                     validator: (value) {
